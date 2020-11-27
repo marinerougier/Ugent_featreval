@@ -81,9 +81,12 @@
   var prolificID = jsPsych.data.getURLVariable("PROLIFIC_PID");
   if(prolificID == null) {prolificID = "999";}
 
-  /* Material */
   var target_gender = jsPsych.randomization.sampleWithoutReplacement(["target_male", "target_female"], 1)[0];
 
+  var Cond_reval = jsPsych.data.getURLVariable("Cond_reval");
+  if(Cond_reval == null) {Cond_reval = jsPsych.randomization.sampleWithoutReplacement(["reval", "no_reval"], 1)[0];}
+
+  /* Material */
   // female stimuli
   var Stim_highAtt_fem = [
   "Stim_selected/Fem_Att_1_high.jpg", 
@@ -808,34 +811,60 @@ FaceStims.map(function(ciImg){
   debrief += "to withdraw consent and have your data excluded, do not hesitate to contact us via Prolific Academic. If you are "; 
   debrief += "interested, you can also ask for the results of this experiment—be aware, however, that this could take several weeks "; 
   debrief += "to gather all the data we need and to analyze them. <br><br>";
-  debrief += "You can copy this code on Prolific: <b>68784134</b> ";
+  debrief += "You can copy this code on Prolific: <b>763C2896</b> ";
   debrief += "or you can click on the following link to validate your participation:</p>";
-  debrief += "<a href='https://app.prolific.co/submissions/complete?cc=68784134' target='_blank'>click here</a><br><br>";
+  debrief += "<a href='https://app.prolific.co/submissions/complete?cc=763C2896' target='_blank'>click here</a><br><br>";
 
 
   /* TIMELINES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-  //timeline.push(consent);
-  timeline.push(activeFullscreen);
-  timeline.push(Quit_expe);
-  timeline.push(Instr_gene1);
-  timeline.push(Instr_gene2);
-  timeline.push(jugmentInst_stim);
-  timeline.push(jugmentInst_stim2);
-  timeline.push(jugmentInst_stim3);
-  //timeline.push(judgments_dimensions);
-  timeline.push(attractiveness_instr);
-  timeline.push(judgments_attractiveness);
-  timeline.push(photoshop_memory);
-  timeline.push(demand_awareness);
-  timeline.push(influence_awareness);
-  timeline.push(believe_photoshop);
-  timeline.push(demand_compliance);
-  timeline.push(age);
-  timeline.push(gender);
-  timeline.push(language);
-  timeline.push(Prolific_reported);
-  timeline.push(comments);
-  timeline.push(exitFullscreen);
+  timeline.push(consent);
+  timeline.push(activeFullscreen,
+                Quit_expe);
+
+
+switch(Cond_reval) {
+  case "reval":
+    timeline.push(Instr_gene1,
+                  Instr_gene2,
+                  jugmentInst_stim,
+                  jugmentInst_stim2,
+                  jugmentInst_stim3,
+                  judgments_dimensions,
+                  attractiveness_instr,
+                  judgments_attractiveness,
+                  photoshop_memory,
+                  demand_awareness,
+                  influence_awareness,
+                  believe_photoshop,
+                  demand_compliance,
+                  age,
+                  gender,
+                  language,
+                  Prolific_reported,
+                  comments,
+                  exitFullscreen);
+    break;
+  case "no_reval":
+    timeline.push(Instr_gene1,
+                  Instr_gene2,
+                  jugmentInst_stim,
+                  jugmentInst_stim3,
+                  judgments_dimensions,
+                  attractiveness_instr,
+                  judgments_attractiveness,
+                  photoshop_memory,
+                  demand_awareness,
+                  influence_awareness,
+                  believe_photoshop,
+                  demand_compliance,
+                  age,
+                  gender,
+                  language,
+                  Prolific_reported,
+                  comments,
+                  exitFullscreen);
+    break;
+}
 
   timeline = _.flattenDeep(timeline); // do not remove this!
   preloadimages = _.flattenDeep(preloadimages);
