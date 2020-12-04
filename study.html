@@ -143,11 +143,11 @@ if (target_gender == "target_male"){
   };
 
 
-  var FaceStims = _.flattenDeep([stim_high, stim_med, stim_low]);
-  preloadimages.push(FaceStims);
+  var Facelist = _.flattenDeep([stim_high, stim_med, stim_low]);
+  preloadimages.push(Facelist);
+  Facelist = _.shuffle(Facelist); // randomize order
 
-  FaceStims = FaceStims.map(function(e) {return {imgHtml: "<img class='imgJudge' src='" + e + "'>"}});
-  FaceStims = _.shuffle(FaceStims); // randomize order
+  FaceStims = Facelist.map(function(e) {return {imgHtml: "<img class='imgJudge' src='" + e + "'>"}});
 
 
     // EXPERIMENT --------------------------------------------------------------------------------------------------------
@@ -244,18 +244,6 @@ var consent = {
     },
   };
 
-  /* PREVIEW CIS */
-  var previewstim = {
-    timeline_variables: FaceStims,
-    choices: jsPsych.NO_KEYS,
-    trial_duration: 800,
-    post_trial_gap: 100,
-    timeline: [{
-      type: 'html-keyboard-response',
-      stimulus: function() {return jsPsych.timelineVariable('imgHtml', true)},
-    }]
-  };
-
   /* JUDGMENTS INSTRUCTIONS */
 
   var jugmentInst_stim = {
@@ -266,9 +254,9 @@ var consent = {
       var html = "";
       html += "<h1>Study of accuracy in person perception</h1>";
       html += "<p class='justify'>Your specific task is to <b>report several judgments on 3 the persons presented below.</b><br> ";
-      html += "<center><img class='imgInstr' src='" + stim_low + "'>      "
-      html += "<img class='imgInstr' src='" + stim_med + "'>      "
-      html += "<img class='imgInstr' src='" + stim_high + "'>      <br></center>"
+      html += "<center><img class='imgInstr' src='" + Facelist[0] + "'>      "
+      html += "<img class='imgInstr' src='" + Facelist[1]  + "'>      "
+      html += "<img class='imgInstr' src='" + Facelist[2]  + "'>      <br></center>"
       html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
       return html;
     },
