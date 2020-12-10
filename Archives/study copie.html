@@ -142,30 +142,6 @@ if (target_gender == "target_male"){
     stim_low  = stim_low_fem;
   };
 
-if (Cond_reval == "reval"){
-    info_high = "<b>Keep in mind that we <u>increased</u> the physical attractiveness of this person</b><br><br><br>";
-    info_med  = "<b>Keep in mind that we did not modify the physical attractiveness of this person</b><br><br><br>";
-    info_low  = "<b>Keep in mind that we <u>decreased</u> the physical attractiveness of this person</b><br><br><br>";
-    } else if 
-    (Cond_reval == "no_reval"){
-    info_low = "<b>Keep in mind that we <u>increased</u> the physical attractiveness of this person</b><br><br><br>";
-    info_med  = "<b>Keep in mind that we did not modify the physical attractiveness of this person</b><br><br><br>";
-    info_high  = "<b>Keep in mind that we <u>decreased</u> the physical attractiveness of this person</b><br><br><br>";
-  };
-
-
-  preloadimages.push(stim_high);
-  preloadimages.push(stim_med);
-  preloadimages.push(stim_low);
-
-  var stim_list = [
-  {imgHtml: "<img class='imgJudge' src='" +stim_high+ "'>", info: info_high},
-  {imgHtml: "<img class='imgJudge' src='" +stim_med+ "'>", info: info_med},
-  {imgHtml: "<img class='imgJudge' src='" +stim_low+ "'>", info: info_low}
-  ]
-
-  stim_list = _.flattenDeep(stim_list);
-  stim_list = _.shuffle(stim_list); // randomize order
 
   var Facelist = _.flattenDeep([stim_high, stim_med, stim_low]);
   preloadimages.push(Facelist);
@@ -454,11 +430,10 @@ var jugmentInst_stim_halo = {
   var scaleBoastfull = ["0</br>Not boastfull at all", "1", "2", "3", "4", "5</br>Totally boastfull"];
 
   var judgments_dimensions = [];
-  stim_list.map(function(ciImg){
+  FaceStims.map(function(ciImg){
     var likert_trial = {
         type: 'survey-likert',
-        preamble: "<img class='imgBack' src='Stim_selected/Fond_blanc.jpeg'>" + ciImg.imgHtml + ciImg.info,
-        randomize_order: true,
+        preamble: "<img class='imgBack' src='Stim_selected/Fond_blanc.jpeg'>" + ciImg.imgHtml,
         questions: [
           {prompt: "", labels: scaleSociable, required: true},
           {prompt: "", labels: scaleFunLoving, required: true},
